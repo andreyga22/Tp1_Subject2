@@ -15,7 +15,7 @@ public class ListNodeManager {
     private NodeList ultimo;
 
     public void insertAtLast(NodeList node) {
-        if(first == null) {
+        if (first == null) {
             first = node;
             ultimo = first;
         } else {
@@ -23,7 +23,7 @@ public class ListNodeManager {
             ultimo = ultimo.getRight();
         }
     }
-    
+
     public NodeTree pull() {
         NodeTree element = first.getData();
         first = first.getRight();

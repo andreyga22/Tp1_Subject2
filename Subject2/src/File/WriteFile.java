@@ -17,22 +17,20 @@ import java.util.ArrayList;
  * @author andre
  */
 public class WriteFile {
-        ObjectOutputStream objectOS;
+
+    ObjectOutputStream objectOS;
 
     public void open(String url) throws IOException {
         objectOS = new ObjectOutputStream(new FileOutputStream(url));
     }
 
-  
-    
-
     public void writeTree(Tree tree) throws IOException {
         objectOS.writeObject(tree);
     }
-    
+
     public void writeDictionary(ArrayList<AsciiCharacter> objects) throws IOException {
         objectOS.writeObject(objects);
-        }
+    }
 
     public void close() throws IOException {
         objectOS.flush();

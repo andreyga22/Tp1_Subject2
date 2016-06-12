@@ -11,7 +11,8 @@ import java.io.Serializable;
  *
  * @author andre
  */
-public class NodeTree implements Serializable{
+public class NodeTree implements Serializable {
+
     private AsciiCharacter data;
     private NodeTree right;
     private NodeTree left;
@@ -48,6 +49,5 @@ public class NodeTree implements Serializable{
     public String toString() {
         return "Nodo{" + "dato=" + data + ", derecho=" + right + ", izquierdo=" + left + '}';
     }
-    
-    
+
 }

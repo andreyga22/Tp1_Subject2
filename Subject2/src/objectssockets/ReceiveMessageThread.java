@@ -25,9 +25,9 @@ public class ReceiveMessageThread extends Thread {
     private ServerSocket server; // server socket
     private final Socket connection; // connection to client
     private final boolean disconnect = false;
-    private final int PORT;
+    private final String PORT;
     
-    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, int PORT) {
+    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, String PORT) {
         this.connection = connection;
         this.PORT = PORT;
         this.input = input;

@@ -10,6 +10,7 @@ package Decode;
  * @author andre
  */
 public class NodeList {
+
     private NodeTree data;
     private NodeList right;
 
@@ -37,6 +38,5 @@ public class NodeList {
     public String toString() {
         return "NodeList{" + "data=" + data + ", right=" + right + '}';
     }
-    
-    
+
 }

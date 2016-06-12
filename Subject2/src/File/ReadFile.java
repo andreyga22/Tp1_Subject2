@@ -19,18 +19,18 @@ import java.util.ArrayList;
  * @author andre
  */
 public class ReadFile {
-    
+
     ObjectInputStream objectIS;
 
-    public void open(String url) throws IOException {
-        objectIS = new ObjectInputStream(new FileInputStream(url));
+    public void open(File file) throws IOException {
+        objectIS = new ObjectInputStream(new FileInputStream(file));
     }
 
     public Tree readTree() throws ClassNotFoundException, IOException {
-        Tree e = (Tree)objectIS.readObject();
+        Tree e = (Tree) objectIS.readObject();
         return e;
     }
-    
+
     public ArrayList<AsciiCharacter> readDictionary() throws IOException, ClassNotFoundException {
         ArrayList<AsciiCharacter> element = (ArrayList<AsciiCharacter>) objectIS.readObject();
         return element;

@@ -10,19 +10,19 @@ public class Client {
     private ObjectOutputStream output; // output stream to client
     private ObjectInputStream input; // input stream from client
     private Socket client; // connection to client
-    private final String HOST = "127.0.0.1";
+    private String HOST = "127.0.0.1";
     private int PORT = 12345;
     private boolean disconnect = false;
 
-    public Client(int PORT) {
-        this.PORT = PORT;
+    public Client(String PORT) {
+        this.HOST = HOST;
     }
     // connect to server and process messages from server
     public void runClient() {
         try { // connect to server, get streams, process connection
             connectToServer(); // create a Socket to make connection
             getStreams(); // get the input and output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(client, output, input, PORT);
+            ReceiveMessageThread thread = new ReceiveMessageThread(client, output, input, HOST);
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -1,14 +1,14 @@
-
 package Decode;
 
 import java.io.Serializable;
 
-public class AsciiCharacter implements Serializable{
+public class AsciiCharacter implements Serializable {
+
     private int weight;
     private char character;
     private String code;
 
-    public AsciiCharacter(int weight, char nombre) throws IllegalArgumentException{
+    public AsciiCharacter(int weight, char nombre) throws IllegalArgumentException {
         this.weight = weight;
         this.character = nombre;
     }
@@ -28,17 +28,17 @@ public class AsciiCharacter implements Serializable{
     public void setCharacter(char character) {
         this.character = character;
     }
-    
+
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     public String getCode() {
         return code;
     }
 
     @Override
     public String toString() {
-        return "Persona{" + "cedula=" + weight + ", nombre=" + character+'}';
+        return "Persona{" + "cedula=" + weight + ", nombre=" + character + '}';
     }
 }

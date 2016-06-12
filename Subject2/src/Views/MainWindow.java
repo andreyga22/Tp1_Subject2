@@ -9,6 +9,7 @@ import Decode.ArrayAscii;
 import Decode.DuplicatedElement;
 import Decode.Tree;
 import File.ReadFile;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import objectssockets.Client;
@@ -19,10 +20,12 @@ import objectssockets.Client;
  */
 public class MainWindow extends javax.swing.JFrame {
 
+    private ReadFile read = new ReadFile();
     private static final int MAX_CHAR = 468;
     private Tree tree = new Tree();
-    private Client client;
+    private Client server;
     private ArrayAscii arrayA;
+
     public MainWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -38,6 +41,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jProgressBar1 = new javax.swing.JProgressBar();
+        fChooser1 = new javax.swing.JFileChooser();
         exitBt = new javax.swing.JButton();
         connectBt = new javax.swing.JButton();
         createKeyBt = new javax.swing.JButton();
@@ -180,13 +184,13 @@ public class MainWindow extends javax.swing.JFrame {
     private void connectBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtActionPerformed
         try {
             String name = nameField.getText();
-            int ip = Integer.parseInt(IPField.getText());
-            if(name.equals("") || IPField.getText().equals("")) {
+            String ip = IPField.getText();
+            if (name.equals("") || IPField.getText().equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
-            client = new Client(ip);
-            client.runClient();
-            ChatWindow chat = new ChatWindow(this, true, name, tree, client);
+            server = new Client(ip);
+            server.runClient();
+            ChatWindow chat = new ChatWindow(this, true, name, tree, server);
             chat.setVisible(true);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -198,44 +202,54 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_createKeyBtActionPerformed
 
     private void loadKeyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyBtActionPerformed
-        readFromTheFile();
+        //esto es para llamar al filechooser   
+        fChooser1.setCurrentDirectory(new java.io.File("."));
+        int returnVal = fChooser1.showOpenDialog(this);
+        fChooser1.setAcceptAllFileFilterUsed(false);
+        if (returnVal == fChooser1.APPROVE_OPTION) {
+            File file = fChooser1.getSelectedFile();
+            readFromTheFile(file);
+            System.out.println("adios");
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+
     }//GEN-LAST:event_loadKeyBtActionPerformed
 
-    public void readFromTheFile() {
+    public void readFromTheFile(File file) {
         try {
+            read.open(file);
             readTree();
             readKey();
+            read.close();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
 
     private void readTree() throws IOException, ClassNotFoundException {
-        ReadFile read = new ReadFile();
-        read.open("key.bin");
+
         tree = read.readTree();
-        read.close();
     }
 
     private void readKey() throws IOException, ClassNotFoundException {
-        ReadFile read = new ReadFile();
-        read.open("key.bin");
+
         tree.setDictionary(read.readDictionary());
-        read.close();
     }
 
     public void createKey() {
         try {
-             arrayA = new ArrayAscii();
+            arrayA = new ArrayAscii();
             arrayA.fill();
             for (int i = 0; i < MAX_CHAR; i++) {
-                if(arrayA.getByIndex(i) != null) {
-                   tree.insertElement(arrayA.getByIndex(i));
-                   String t = arrayA.getByIndex(i).getCharacter() + " " + arrayA.getByIndex(i).getCode() + " " + arrayA.getByIndex(i).getWeight() + "\n";
-                System.out.println(t);
+                if (arrayA.getByIndex(i) != null) {
+                    tree.insertElement(arrayA.getByIndex(i));
+                    String t = arrayA.getByIndex(i).getCharacter() + " " + arrayA.getByIndex(i).getCode() + " " + arrayA.getByIndex(i).getWeight() + "\n";
+                    System.out.println(t);
                 }
             }
             tree.createDictionary();
+
             tree.writeInTheFile();
         } catch (DuplicatedElement ex) {
             ex.printStackTrace();
@@ -287,6 +301,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton connectBt;
     private javax.swing.JButton createKeyBt;
     private javax.swing.JButton exitBt;
+    private javax.swing.JFileChooser fChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

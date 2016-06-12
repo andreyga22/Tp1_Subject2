@@ -9,10 +9,10 @@ package Decode;
  *
  * @author andre
  */
-public class DuplicatedElement extends Exception{
+public class DuplicatedElement extends Exception {
 
     public DuplicatedElement(String string) {
         super(string);
     }
-    
+
 }
