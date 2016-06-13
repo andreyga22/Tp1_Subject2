@@ -17,6 +17,7 @@ public class Client {
     public Client(String PORT) {
         this.HOST = HOST;
     }
+
     // connect to server and process messages from server
     public void runClient() {
         try { // connect to server, get streams, process connection
@@ -26,7 +27,7 @@ public class Client {
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } 
+        }
     }
 
     // connect to server
@@ -49,7 +50,7 @@ public class Client {
 
     // process connection with server
     public void sendMessage(String message) throws IOException, ClassNotFoundException {
-       output.writeObject(message);
+        output.writeObject(message);
     }
 
     private void closeConnection() {

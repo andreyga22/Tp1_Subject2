@@ -31,7 +31,8 @@ public class Tree implements Serializable {
         if (t == null) {
             t = new NodeTree(ascii);
         } else //            System.out.println("Raiz: " + t.getData() + "    ascii: " + ascii.getWeight());
-         if (ascii.getWeight() < t.getData().getWeight()) {
+        {
+            if (ascii.getWeight() < t.getData().getWeight()) {
                 t.setLeft(insert(ascii, t.getLeft()));
             } else if (ascii.getWeight() > t.getData().getWeight()) {
                 t.setRight(insert(ascii, t.getRight()));
@@ -39,6 +40,7 @@ public class Tree implements Serializable {
                 ascii.setWeight((int) (Math.random() * 12000));
                 insert(ascii, t);
             }
+        }
         return t;
     }
 

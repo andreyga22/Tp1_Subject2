@@ -13,7 +13,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author alelizmu
@@ -26,7 +25,7 @@ public class ReceiveMessageThread extends Thread {
     private final Socket connection; // connection to client
     private final boolean disconnect = false;
     private final String PORT;
-    
+
     public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, String PORT) {
         this.connection = connection;
         this.PORT = PORT;
@@ -42,9 +41,9 @@ public class ReceiveMessageThread extends Thread {
 //    }
     // process connection with client
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
-        while(!disconnect) {
-           System.out.println(input.readObject());
-       }
+        while (!disconnect) {
+            System.out.println(input.readObject());
+        }
     }
 
     // close streams and socket
@@ -62,7 +61,7 @@ public class ReceiveMessageThread extends Thread {
 
     @Override
     public void run() {
-    try{
+        try {
 //            getStreams();
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
@@ -72,4 +71,3 @@ public class ReceiveMessageThread extends Thread {
         }
     }
 }
-
