@@ -89,8 +89,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Digite su nombre");
 
+        nameField.setText("client");
+
         jLabel1.setText("Direccion IP");
 
+        IPField.setText("localhost");
         IPField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IPFieldActionPerformed(evt);

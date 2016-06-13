@@ -10,7 +10,7 @@ public class Client {
     private ObjectOutputStream output; // output stream to client
     private ObjectInputStream input; // input stream from client
     private Socket client; // connection to client
-    private String HOST = "127.0.0.1";
+    private String HOST = "localhost";
     private int PORT = 12345;
     private boolean disconnect = false;
 
@@ -26,9 +26,7 @@ public class Client {
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } finally {
-            closeConnection(); // close connection
-        }
+        } 
     }
 
     // connect to server
