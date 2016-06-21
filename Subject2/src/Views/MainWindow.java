@@ -9,6 +9,7 @@ import Decode.ArrayAscii;
 import Decode.DuplicatedElement;
 import Decode.Tree;
 import File.ReadFile;
+import File.WriteFile;
 import Main.Controller;
 import java.io.File;
 import java.io.IOException;
@@ -257,7 +258,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
             tree.createDictionary();
 
-            tree.writeInTheFile();
+            tree.writeInTheFile(new WriteFile());
         } catch (DuplicatedElement ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

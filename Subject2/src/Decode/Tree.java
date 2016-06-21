@@ -5,7 +5,6 @@
  */
 package Decode;
 
-import File.ReadFile;
 import File.WriteFile;
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class Tree implements Serializable {
 
     private NodeTree root = null;
-    private WriteFile write = new WriteFile();
+//    private WriteFile write = new WriteFile();
     private ArrayList<AsciiCharacter> dictionary = new ArrayList<>();
     private static final int MAX_CHAR = 468;
 
@@ -180,19 +179,19 @@ public class Tree implements Serializable {
         root = null;
     }
 
-    public void writeInTheFile() throws IOException {
-        write.open("key.bin");
-        writeTree();
-        writeKey();
-        write.close();
+    public void writeInTheFile(WriteFile wf) throws IOException {
+        wf.open("key.bin");
+        writeTree(wf);
+        writeKey(wf);
+        wf.close();
     }
 
-    private void writeTree() throws IOException {
-        write.writeTree(this);
+    private void writeTree(WriteFile wf) throws IOException {
+        wf.writeTree(this);
     }
 
-    private void writeKey() throws IOException {
-        write.writeDictionary(dictionary);
+    private void writeKey(WriteFile wf) throws IOException {
+        wf.writeDictionary(dictionary);
     }
 
     public void setDictionary(ArrayList<AsciiCharacter> element) {
@@ -229,6 +228,40 @@ public class Tree implements Serializable {
     }
 
     public void hexa() {
+    }
+    
+   public String encode(String text) {
+        String code = "";
+        for (int i = 0; i < text.length(); i++) {
+            String searched = searchInDictionary(text.charAt(i));
+            if(!searched.equals("")) {
+                code += searched;
+            }
+        }
+        return code;
+    }
+    
+    public String decode(String text) {
+        
+    }
+    
+    private char isLeaf(NodeTree root) {
+        if(root.getLeft() == null && root.getRight() == null) {
+            return root.getData().getCharacter();
+        }
+        else return ' ';
+    }
+    
+    public 
+    
+    public String searchInDictionary(char letter) {
+        String text = "";
+        for (AsciiCharacter aux : dictionary) {
+            if(aux != null && aux.getCharacter() == letter) {
+                text += aux.getCode();
+            }
+        }
+        return text;
     }
 
 }

@@ -39,6 +39,6 @@ public class AsciiCharacter implements Serializable {
 
     @Override
     public String toString() {
-        return "Persona{" + "cedula=" + weight + ", nombre=" + character + '}';
+        return "Character{" + "peso=" + weight + ", char=" + character + '}';
     }
 }

@@ -166,7 +166,13 @@ public class ChatWindow extends javax.swing.JDialog {
     }
 
     public void read(String text) {
-        jTextcode.setText(jTextcode.getText() + text);
+        jTextcode.setText(jTextcode.getText() + "\n" + text);
+        text = decode(text);
+        jTextNormal.setText(jTextNormal.getText() + "\n" + text);
+    }
+    
+    private String decode(String text) {
+        return tree.decode(text);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
