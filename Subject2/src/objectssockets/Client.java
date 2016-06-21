@@ -1,5 +1,6 @@
 package objectssockets;
 
+import Main.Controller;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
@@ -13,9 +14,11 @@ public class Client {
     private String HOST = "localhost";
     private int PORT = 12345;
     private boolean disconnect = false;
+    private Controller controller;
 
-    public Client(String PORT) {
-        this.HOST = HOST;
+    public Client(String host, Controller controller) {
+        this.controller = controller;
+        this.HOST = host;
     }
 
     // connect to server and process messages from server
@@ -23,7 +26,7 @@ public class Client {
         try { // connect to server, get streams, process connection
             connectToServer(); // create a Socket to make connection
             getStreams(); // get the input and output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(client, output, input, HOST);
+            ReceiveMessageThread thread = new ReceiveMessageThread(client, output, input, HOST, controller);
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -53,7 +56,7 @@ public class Client {
         output.writeObject(message);
     }
 
-    private void closeConnection() {
+    public void closeConnection() {
         System.out.println("\nClosing connection");
         try {
             output.close(); // close output stream

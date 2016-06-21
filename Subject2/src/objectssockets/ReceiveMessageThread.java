@@ -5,6 +5,7 @@
  */
 package objectssockets;
 
+import Main.Controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,9 +26,11 @@ public class ReceiveMessageThread extends Thread {
     private final Socket connection; // connection to client
     private final boolean disconnect = false;
     private final String PORT;
+    private Controller controller;
 
-    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, String PORT) {
+    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, String PORT, Controller controller) {
         this.connection = connection;
+        this.controller = controller;
         this.PORT = PORT;
         this.input = input;
         this.output = output;
@@ -42,7 +45,8 @@ public class ReceiveMessageThread extends Thread {
     // process connection with client
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
         while (!disconnect) {
-            System.out.println(input.readObject());
+            String text = (String) input.readObject();
+            receiveMessage(text);
         }
     }
 
@@ -69,5 +73,9 @@ public class ReceiveMessageThread extends Thread {
         } finally {
             closeConnection(); // close connection
         }
+    }
+    
+    private void receiveMessage(String text) {
+        controller.writeInTextField(text);
     }
 }

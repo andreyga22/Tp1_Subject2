@@ -24,16 +24,16 @@ public class ChatWindow extends javax.swing.JDialog {
     private final String userName;
     private final Frame parent;
     private final Tree tree;
-    private final Client server;
+    private final Client client;
 
-    public ChatWindow(java.awt.Frame parent, boolean modal, String userName, Tree tree, Client server) {
+    public ChatWindow(java.awt.Frame parent, boolean modal, String userName, Tree tree, Client client) {
         super(parent, modal);
         initComponents();
         this.userName = userName;
         titlelabel.setText(userName);
         this.parent = parent;
         this.tree = tree;
-        this.server = server;
+        this.client = client;
         this.setLocationRelativeTo(null);
         jTextcode.setEditable(false);
         jTextNormal.setEditable(false);
@@ -140,11 +140,17 @@ public class ChatWindow extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
+        client.closeConnection();
         parent.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sendBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtActionPerformed
-
+        try {
+            String text = jTextWrite.getText();
+            client.sendMessage(text);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_sendBtActionPerformed
 
     private void write(String text) {
@@ -153,10 +159,14 @@ public class ChatWindow extends javax.swing.JDialog {
             for (int i = 0; i < text.length(); i++) {
                 code2 += tree.findKey(text.charAt(i));
             }
-            server.sendMessage(code2);
+            client.sendMessage(code2);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error en la escritura del codigo");
         }
+    }
+
+    public void read(String text) {
+        jTextcode.setText(jTextcode.getText() + text);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
