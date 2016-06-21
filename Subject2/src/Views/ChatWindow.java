@@ -35,6 +35,8 @@ public class ChatWindow extends javax.swing.JDialog {
         this.tree = tree;
         this.server = server;
         this.setLocationRelativeTo(null);
+        jTextcode.setEditable(false);
+        jTextNormal.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")

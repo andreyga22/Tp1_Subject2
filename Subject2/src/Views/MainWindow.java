@@ -23,7 +23,7 @@ public class MainWindow extends javax.swing.JFrame {
     private ReadFile read = new ReadFile();
     private static final int MAX_CHAR = 468;
     private Tree tree = new Tree();
-    private Client server;
+    private Client client;
     private ArrayAscii arrayA;
 
     public MainWindow() {
@@ -191,9 +191,9 @@ public class MainWindow extends javax.swing.JFrame {
             if (name.equals("") || IPField.getText().equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
-            server = new Client(ip);
-            server.runClient();
-            ChatWindow chat = new ChatWindow(this, true, name, tree, server);
+            client = new Client(ip);
+            client.runClient();
+            ChatWindow chat = new ChatWindow(this, true, name, tree, client);
             chat.setVisible(true);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
