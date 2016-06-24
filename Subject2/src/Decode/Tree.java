@@ -26,19 +26,23 @@ public class Tree implements Serializable {
     }
 
     private NodeTree insert(AsciiCharacter ascii, NodeTree t) throws DuplicatedElement {
-
         if (t == null) {
             t = new NodeTree(ascii);
-        } else //            System.out.println("Raiz: " + t.getData() + "    ascii: " + ascii.getWeight());
-         if (ascii.getWeight() < t.getData().getWeight()) {
+            return t;
+        } else {
+            if (ascii.getWeight() < t.getData().getWeight()) {
                 t.setLeft(insert(ascii, t.getLeft()));
-            } else if (ascii.getWeight() > t.getData().getWeight()) {
-                t.setRight(insert(ascii, t.getRight()));
             } else {
-                ascii.setWeight((int) (Math.random() * 12000));
-                insert(ascii, root);
+                if (ascii.getWeight() > t.getData().getWeight()) {
+                    t.setRight(insert(ascii, t.getRight()));
+                } else {
+                    ascii.setWeight((int) (Math.random() * 12000));
+                    insert(ascii, root);
+                }
+        
             }
-        return t;
+            return t;
+        }
     }
 
     public AsciiCharacter find(int ascii) {
