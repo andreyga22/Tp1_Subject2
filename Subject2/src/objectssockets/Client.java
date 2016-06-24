@@ -15,7 +15,7 @@ public class Client {
     private int PORT = 12345;
     private boolean disconnect = false;
     private Controller controller;
-
+    private ReceiveMessageThread thread;
     public Client(String host, Controller controller) {
         this.controller = controller;
         this.HOST = host;
@@ -26,7 +26,7 @@ public class Client {
         try { // connect to server, get streams, process connection
             connectToServer(); // create a Socket to make connection
             getStreams(); // get the input and output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(client, output, input, HOST, controller);
+             thread = new ReceiveMessageThread(client, output, input, HOST, controller);
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -59,6 +59,7 @@ public class Client {
     public void closeConnection() {
         System.out.println("\nClosing connection");
         try {
+            thread.closeConnection();
             output.close(); // close output stream
             input.close(); // close input stream
             client.close(); // close socket

@@ -28,9 +28,9 @@ public class WriteFile {
         objectOS.writeObject(tree);
     }
 
-    public void writeDictionary(ArrayList<AsciiCharacter> objects) throws IOException {
-        objectOS.writeObject(objects);
-    }
+//    public void writeDictionary(ArrayList<AsciiCharacter> objects) throws IOException {
+//        objectOS.writeObject(objects);
+//    }
 
     public void close() throws IOException {
         objectOS.flush();

@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -31,13 +30,7 @@ public class ReadFile {
         return e;
     }
 
-    public ArrayList<AsciiCharacter> readDictionary() throws IOException, ClassNotFoundException {
-        ArrayList<AsciiCharacter> element = (ArrayList<AsciiCharacter>) objectIS.readObject();
-        return element;
-    }
-
     public void close() throws IOException {
         objectIS.close();
     }
-
 }

@@ -36,7 +36,7 @@ public class Tree implements Serializable {
                 t.setRight(insert(ascii, t.getRight()));
             } else {
                 ascii.setWeight((int) (Math.random() * 12000));
-                insert(ascii, t);
+                insert(ascii, root);
             }
         return t;
     }
@@ -182,7 +182,7 @@ public class Tree implements Serializable {
     public void writeInTheFile(WriteFile wf) throws IOException {
         wf.open("key.bin");
         writeTree(wf);
-        writeKey(wf);
+//        writeKey(wf);
         wf.close();
     }
 
@@ -190,78 +190,90 @@ public class Tree implements Serializable {
         wf.writeTree(this);
     }
 
-    private void writeKey(WriteFile wf) throws IOException {
-        wf.writeDictionary(dictionary);
-    }
-
-    public void setDictionary(ArrayList<AsciiCharacter> element) {
-        this.dictionary = element;
-    }
-
-    public void createDictionary() {
+    public void createDictionaryAndTree() throws DuplicatedElement {
         for (int i = 32; i < MAX_CHAR; i++) {
-            String actualKey = findKey((char) i, root, "");
-            AsciiCharacter element = new AsciiCharacter(0, (char) i);
-            element.setCode(actualKey);
-            System.out.println(element);
-            dictionary.add(element);
+            int random = (int) (Math.random() * 12000);
+            AsciiCharacter auxA = new AsciiCharacter(random, (char) i);
+            insertElement(auxA);
+            String code = findKey(auxA.getCharacter());
+            auxA.setCode(code);
+            dictionary.add(auxA);
         }
     }
 
-    public String findKey(char ascii) {
-        return findKey(ascii, root, "");
+    private String findKey(char ascii) {
+        String code = "";
+        code = findKey(ascii, root, code);
+        return code;
     }
 
     private String findKey(char ascii, NodeTree r, String code) {
-        while (r != null) {
-            if (ascii > r.getData().getCharacter()) {
+        if (r != null) {
+            if (r.getData().getCharacter() == ascii) {
+                return code;
+            } else if (ascii > r.getData().getCharacter()) {
                 code += 1;
-                r = r.getRight();
+                return findKey(ascii, r.getRight(), code);
             } else if (ascii < r.getData().getCharacter()) {
                 code += 0;
-                r = r.getLeft();
-            } else {
-                return code;
-            }
-        }
-        return null;
-    }
-
-    public void hexa() {
-    }
-    
-   public String encode(String text) {
-        String code = "";
-        for (int i = 0; i < text.length(); i++) {
-            String searched = searchInDictionary(text.charAt(i));
-            if(!searched.equals("")) {
-                code += searched;
+                return findKey(ascii, r.getLeft(), code);
             }
         }
         return code;
     }
-    
-    public String decode(String text) {
-        
+
+    public void hexa() {
     }
-    
-    private char isLeaf(NodeTree root) {
-        if(root.getLeft() == null && root.getRight() == null) {
-            return root.getData().getCharacter();
+
+    public String encode(String text) {
+        String code = "";
+        System.out.println("Palabra sin codificar " + text);
+        for (int i = 0; i < text.length(); i++) {
+            String searched = searchInDictionary(text.charAt(i));
+            System.out.println("searched " + searched);
+            if (!searched.equals("")) {
+                code += searched;
+            }
         }
-        else return ' ';
+        System.out.println("codigo despues de codigicar " + code);
+        return code;
     }
-    
-    public 
-    
+
+    public String decode(String text) {
+        System.out.println("Variable que se recibe en el decode " + text);
+        String aux = "";
+        String ready = "";
+        for (int i = 0; i < text.length(); i++) {
+            aux += text.charAt(i);
+            System.out.println("aux decde" + aux);
+            String temp = searchCode(aux);
+            if (temp != null) {
+                ready += temp;
+                System.out.println("ready " + ready);
+                aux = "";
+            }
+        }
+        return ready;
+    }
+
     public String searchInDictionary(char letter) {
         String text = "";
         for (AsciiCharacter aux : dictionary) {
-            if(aux != null && aux.getCharacter() == letter) {
+            if (aux != null && aux.getCharacter() == letter) {
+                System.out.println("aux.getCode() " + aux.getCode());
                 text += aux.getCode();
             }
         }
         return text;
     }
 
+    private String searchCode(String text) {
+        System.out.println("text en searchCode " + text);
+        for (AsciiCharacter aux : dictionary) {
+            if (aux != null && aux.getCode().equalsIgnoreCase(text)) {
+                return aux.getCharacter() + "";
+            }
+        }
+        return null;
+    }
 }
