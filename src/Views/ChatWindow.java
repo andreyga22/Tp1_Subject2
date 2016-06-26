@@ -207,7 +207,7 @@ public class ChatWindow extends javax.swing.JDialog {
 
     private String decode(String text) {
         return tree.decode(text);
-    }
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
