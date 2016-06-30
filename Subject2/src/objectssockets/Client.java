@@ -16,6 +16,7 @@ public class Client {
     private boolean disconnect = false;
     private Controller controller;
     private ReceiveMessageThread thread;
+
     public Client(String host, Controller controller) {
         this.controller = controller;
         this.HOST = host;
@@ -26,19 +27,17 @@ public class Client {
         try { // connect to server, get streams, process connection
             connectToServer(); // create a Socket to make connection
             getStreams(); // get the input and output streams
-             thread = new ReceiveMessageThread(client, output, input, HOST, controller);
+            thread = new ReceiveMessageThread(client, output, input, HOST, controller);
             thread.start();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
     // connect to server
     private void connectToServer() throws IOException {
         System.out.println("Attempting connection\n");
-        // create Socket to make connection to server
-        client = new Socket(HOST, PORT); //Or new Socket(InetAddress.getByName(HOST), PORT);
-        // display connection information
+        client = new Socket(HOST, PORT);
         System.out.println("Connected to: " + client.getInetAddress().getHostName());
     }
 
@@ -46,8 +45,7 @@ public class Client {
     private void getStreams() throws IOException {
         // set up output stream for object
         output = new ObjectOutputStream(client.getOutputStream());
-        output.flush(); // flush output buffer to send header information   
-        // set up input stream for object
+        output.flush();
         input = new ObjectInputStream(client.getInputStream());
     }
 
@@ -64,11 +62,7 @@ public class Client {
             input.close(); // close input stream
             client.close(); // close socket
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
-
-//    public static void main(String[] args) {
-//        new Client().runClient();
-//    }
 }

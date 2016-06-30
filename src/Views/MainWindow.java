@@ -47,8 +47,6 @@ public class MainWindow extends javax.swing.JFrame {
         exitBt = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         IPField = new javax.swing.JTextField();
-        nameField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         createKeyBt = new javax.swing.JButton();
         loadKeyBt = new javax.swing.JButton();
@@ -85,10 +83,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        nameField.setText("client");
-
-        jLabel3.setText("Digite su nombre");
-
         jLabel2.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
         jLabel2.setText("Citara chat");
 
@@ -118,21 +112,17 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 162, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(105, 105, 105))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nameField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(IPField)))
+                                .addComponent(IPField))
                             .addComponent(connectBt, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(exitBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(createKeyBt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -149,10 +139,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(IPField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(createKeyBt))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadKeyBt))
+                .addComponent(loadKeyBt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitBt)
@@ -190,9 +177,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void connectBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtActionPerformed
         try {
-            String name = nameField.getText();
             String ip = IPField.getText();
-            if (name.equals("") || IPField.getText().equals("")) {
+            if (IPField.getText().equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
 
@@ -200,10 +186,10 @@ public class MainWindow extends javax.swing.JFrame {
             client = new Client(ip, controller);
             client.runClient();
             this.dispose();
-            controller.initializeChat(client, name, this, true, tree);
-            
+            controller.initializeChat(client, this, true, tree);
+
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al conectarse con el servidor");
         }
     }//GEN-LAST:event_connectBtActionPerformed
 
@@ -218,9 +204,6 @@ public class MainWindow extends javax.swing.JFrame {
         if (returnVal == fChooser1.APPROVE_OPTION) {
             File file = fChooser1.getSelectedFile();
             readFromTheFile(file);
-            System.out.println("adios");
-        } else {
-            System.out.println("File access cancelled by user.");
         }
 
     }//GEN-LAST:event_loadKeyBtActionPerformed
@@ -231,7 +214,7 @@ public class MainWindow extends javax.swing.JFrame {
             readTree();
             read.close();
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al leer el archivo");
         }
     }
 
@@ -245,7 +228,7 @@ public class MainWindow extends javax.swing.JFrame {
             tree.createDictionaryAndTree();
             tree.writeInTheFile(new WriteFile());
         } catch (DuplicatedElement | IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el archivo");
         }
     }
 
@@ -257,10 +240,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JFileChooser fChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JButton loadKeyBt;
-    private javax.swing.JTextField nameField;
     // End of variables declaration//GEN-END:variables
 }

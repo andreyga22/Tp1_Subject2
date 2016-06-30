@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class Tree implements Serializable {
 
     private NodeTree root = null;
-//    private WriteFile write = new WriteFile();
     private ArrayList<AsciiCharacter> dictionary = new ArrayList<>();
     private static final int MAX_CHAR = 468;
 
@@ -183,7 +182,6 @@ public class Tree implements Serializable {
     public void writeInTheFile(WriteFile wf) throws IOException {
         wf.open("key.bin");
         writeTree(wf);
-//        writeKey(wf);
         wf.close();
     }
 
@@ -195,7 +193,6 @@ public class Tree implements Serializable {
         for (int i = 32; i < MAX_CHAR; i++) {
             int random = (int) (Math.random() * 12000);
             AsciiCharacter auxA = new AsciiCharacter(random, (char) i);
-            System.out.println((char) i);
             insertElement(auxA);
             String code = findKey(auxA);
             auxA.setCode(code);
@@ -244,7 +241,6 @@ public class Tree implements Serializable {
 
     public String encode(String text) {
         String code = "";
-        System.out.println("Palabra sin codificar " + text);
         for (int i = 0; i < text.length(); i++) {
             String searched = searchInDictionary(text.charAt(i));
             if (i != text.length() - 1) {
@@ -253,15 +249,12 @@ public class Tree implements Serializable {
                 code += searched;
             }
         }
-        System.out.println("codigo despues de codigicar " + code);
         code = makeHexa(code);
         return code;
     }
 
     public String decode(String text) {
-        System.out.println("Variable que se recibe en el decode " + text);
         text = decodeHexa(text);
-        System.out.println("Variable que se recibe en el decodeHJexa " + text);
         String ready = "";
         String[] reText = text.split(",");
         for (int i = 0; i < reText.length; i++) {
@@ -277,7 +270,6 @@ public class Tree implements Serializable {
         String text = "";
         for (AsciiCharacter aux : dictionary) {
             if (aux != null && aux.getCharacter() == letter) {
-                System.out.println("aux.getCode() " + aux.getCode());
                 text += aux.getCode();
             }
         }
@@ -285,7 +277,6 @@ public class Tree implements Serializable {
     }
 
     private String searchCode(String text) {
-        System.out.println("text en searchCode " + text);
         for (AsciiCharacter aux : dictionary) {
             if (aux != null && aux.getCode().equalsIgnoreCase(text)) {
                 return aux.getCharacter() + "";

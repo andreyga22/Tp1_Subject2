@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class Tree implements Serializable {
 
     private NodeTree root = null;
-//    private WriteFile write = new WriteFile();
     private ArrayList<AsciiCharacter> dictionary = new ArrayList<>();
     private static final int MAX_CHAR = 468;
 
@@ -32,14 +31,11 @@ public class Tree implements Serializable {
         } else {
             if (ascii.getWeight() < t.getData().getWeight()) {
                 t.setLeft(insert(ascii, t.getLeft()));
+            } else if (ascii.getWeight() > t.getData().getWeight()) {
+                t.setRight(insert(ascii, t.getRight()));
             } else {
-                if (ascii.getWeight() > t.getData().getWeight()) {
-                    t.setRight(insert(ascii, t.getRight()));
-                } else {
-                    ascii.setWeight((int) (Math.random() * 12000));
-                    insert(ascii, root);
-                }
-        
+                ascii.setWeight((int) (Math.random() * 12000));
+                insert(ascii, root);
             }
             return t;
         }
@@ -186,7 +182,6 @@ public class Tree implements Serializable {
     public void writeInTheFile(WriteFile wf) throws IOException {
         wf.open("key.bin");
         writeTree(wf);
-//        writeKey(wf);
         wf.close();
     }
 
@@ -231,29 +226,23 @@ public class Tree implements Serializable {
 
     public String encode(String text) {
         String code = "";
-        System.out.println("Palabra sin codificar " + text);
         for (int i = 0; i < text.length(); i++) {
             String searched = searchInDictionary(text.charAt(i));
-            System.out.println("searched " + searched);
             if (!searched.equals("")) {
                 code += searched;
             }
         }
-        System.out.println("codigo despues de codigicar " + code);
         return code;
     }
 
     public String decode(String text) {
-        System.out.println("Variable que se recibe en el decode " + text);
         String aux = "";
         String ready = "";
         for (int i = 0; i < text.length(); i++) {
             aux += text.charAt(i);
-            System.out.println("aux decde" + aux);
             String temp = searchCode(aux);
             if (temp != null) {
                 ready += temp;
-                System.out.println("ready " + ready);
                 aux = "";
             }
         }
@@ -264,7 +253,6 @@ public class Tree implements Serializable {
         String text = "";
         for (AsciiCharacter aux : dictionary) {
             if (aux != null && aux.getCharacter() == letter) {
-                System.out.println("aux.getCode() " + aux.getCode());
                 text += aux.getCode();
             }
         }
@@ -272,7 +260,6 @@ public class Tree implements Serializable {
     }
 
     private String searchCode(String text) {
-        System.out.println("text en searchCode " + text);
         for (AsciiCharacter aux : dictionary) {
             if (aux != null && aux.getCode().equalsIgnoreCase(text)) {
                 return aux.getCharacter() + "";

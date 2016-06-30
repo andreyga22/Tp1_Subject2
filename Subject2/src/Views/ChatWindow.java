@@ -147,10 +147,8 @@ public class ChatWindow extends javax.swing.JDialog {
     private void sendBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtActionPerformed
         try {
             if (!jTextWrite.getText().equals("")) {
-                System.out.println("si entra al send");
                 String text = jTextWrite.getText();
                 String codedText = tree.encode(text);
-                System.out.println(codedText);
                 client.sendMessage(codedText);
             }
         } catch (IOException | ClassNotFoundException ex) {
@@ -158,17 +156,6 @@ public class ChatWindow extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_sendBtActionPerformed
 
-//    private void write(String text) {
-//        try {
-//            String code2 = "";
-//            for (int i = 0; i < text.length(); i++) {
-//                code2 += tree.findKey(text.charAt(i));
-//            }
-//            client.sendMessage(code2);
-//        } catch (IOException | ClassNotFoundException ex) {
-//            System.out.println("Error en la escritura del codigo");
-//        }
-//    }
     public void read(String text) {
         jTextcode.setText(jTextcode.getText() + "\n" + text);
         text = decode(text);

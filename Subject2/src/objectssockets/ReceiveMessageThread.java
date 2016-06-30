@@ -22,7 +22,6 @@ public class ReceiveMessageThread extends Thread {
 
     private final ObjectOutputStream output;
     private final ObjectInputStream input;
-//    private ServerSocket server; // server socket
     private final Socket connection; // connection to client
     private boolean disconnect = false;
     private final String PORT;
@@ -36,13 +35,6 @@ public class ReceiveMessageThread extends Thread {
         this.output = output;
     }
 
-//    // get streams to send and receive data
-//    private void getStreams() throws IOException {
-//        output = new ObjectOutputStream(connection.getOutputStream());
-//        output.flush(); 
-//        input = new ObjectInputStream(connection.getInputStream());
-//    }
-    // process connection with client
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
         while (!disconnect) {
             String text = (String) input.readObject();
@@ -58,24 +50,22 @@ public class ReceiveMessageThread extends Thread {
             output.close(); // close output stream
             input.close(); // close input stream
             connection.close(); // close socket  
-//            server.close(); // clse server socket
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void run() {
         try {
-//            getStreams();
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
-            Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } finally {
             closeConnection(); // close connection
         }
     }
-    
+
     private void receiveMessage(String text) {
         controller.writeInTextField(text);
     }

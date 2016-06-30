@@ -21,15 +21,13 @@ public class ChatWindow extends javax.swing.JDialog {
     /**
      * Creates new form ChatWindow
      */
-    private final String userName;
     private final Frame parent;
     private final Tree tree;
     private final Client client;
 
-    public ChatWindow(java.awt.Frame parent, boolean modal, String userName, Tree tree, Client client) {
+    public ChatWindow(java.awt.Frame parent, boolean modal, Tree tree, Client client) {
         super(parent, modal);
         initComponents();
-        this.userName = userName;
         titlelabel.setText("Hablando con el servidor");
         this.parent = parent;
         this.tree = tree;
@@ -207,7 +205,7 @@ public class ChatWindow extends javax.swing.JDialog {
 
     private String decode(String text) {
         return tree.decode(text);
-    } 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

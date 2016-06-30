@@ -25,10 +25,10 @@ public class Controller {
     public void writeInTextField(String text) {
         chatW.read(text);
     }
-    
-    public void initializeChat(Client client, String name , Frame parent, boolean modal, Tree tree) {
-         chatW = new ChatWindow(parent, true, name, tree, client);
-            chatW.setVisible(true);
+
+    public void initializeChat(Client client, Frame parent, boolean modal, Tree tree) {
+        chatW = new ChatWindow(parent, true, tree, client);
+        chatW.setVisible(true);
     }
 
 }

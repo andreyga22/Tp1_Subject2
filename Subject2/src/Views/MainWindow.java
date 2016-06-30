@@ -197,7 +197,7 @@ public class MainWindow extends javax.swing.JFrame {
             client.runClient();
             this.dispose();
             controller.initializeChat(client, name, this, true, tree);
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -214,9 +214,6 @@ public class MainWindow extends javax.swing.JFrame {
         if (returnVal == fChooser1.APPROVE_OPTION) {
             File file = fChooser1.getSelectedFile();
             readFromTheFile(file);
-            System.out.println("adios");
-        } else {
-            System.out.println("File access cancelled by user.");
         }
 
     }//GEN-LAST:event_loadKeyBtActionPerformed
@@ -227,7 +224,7 @@ public class MainWindow extends javax.swing.JFrame {
             readTree();
             read.close();
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el archivo");
         }
     }
 
@@ -241,7 +238,7 @@ public class MainWindow extends javax.swing.JFrame {
             tree.createDictionaryAndTree();
             tree.writeInTheFile(new WriteFile());
         } catch (DuplicatedElement | IOException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al crear la llave");
         }
     }
 
